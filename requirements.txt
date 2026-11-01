@@ -1,0 +1,16 @@
+# Pinned, verified environment for reproducible installs.
+# Canonical dependency declarations live in pyproject.toml; these exact
+# versions were verified with Python 3.13.7 (full suite passing).
+#
+#   pip install -r requirements.txt       # editable project + pinned deps (this file)
+#   pip install -e ".[dev]"               # editable project + dependency ranges (pyproject)
+#   pip install -e ".[dev,notebook]"      # same, plus Jupyter for notebooks/
+
+-e .
+pandas==3.0.0
+numpy==2.4.1
+scikit-learn==1.9.0
+PyYAML==6.0.3
+
+# Testing
+pytest==9.2.0

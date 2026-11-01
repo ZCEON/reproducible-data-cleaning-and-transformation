@@ -1,0 +1,33 @@
+# Pipeline configuration
+
+paths:
+  raw_data: data/raw/          # input CSVs (read-only)
+  interim_data: data/interim/  # cleaned data (after clean stage)
+  processed_data: data/processed/  # final data (after transform stage)
+
+# Validation rules applied to each raw file before cleaning.
+# All rules are optional; empty rules = check disabled.
+validation:
+  required_columns: []   # e.g. [id, age]
+  expected_dtypes: {}    # e.g. {age: numeric, name: string, active: boolean}
+                         # groups: numeric | boolean | string | datetime
+                         # or a pandas dtype name, e.g. {id: int64}
+  ranges: {}             # e.g. {age: {min: 0, max: 120}} (inclusive bounds)
+
+cleaning:
+  missing_values:
+    strategy: median        # mean | median | mode | drop
+    threshold: 0.5          # drop columns with more than this fraction missing (0-1)
+  duplicates:
+    keep: first             # first | last | false
+  inconsistent_values:
+    strip_whitespace: true
+    normalize_case: lower   # lower | upper | false
+
+transformation:
+  scaling:
+    method: standard        # standard | minmax | robust
+    columns: []             # empty = all numeric columns
+  encoding:
+    method: onehot          # onehot | ordinal
+    columns: []             # empty = all object/string columns

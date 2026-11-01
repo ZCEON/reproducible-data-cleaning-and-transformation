@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reproducible-data-cleaning-and-transformation"
+version = "0.1.0"
+description = "A configuration-driven pipeline that validates, cleans, and transforms tabular data reproducibly."
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "ZCEON" }]
+requires-python = ">=3.10"
+keywords = ["data-cleaning", "data-transformation", "pipeline", "pandas"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "scikit-learn>=1.3",
+    "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+# pip install -e ".[dev]"          -> runtime + test tools
+# pip install -e ".[dev,notebook]" -> also Jupyter support for notebooks/
+dev = ["pytest>=7.4"]
+notebook = ["jupyter>=1.0", "ipykernel>=6.25", "nbformat>=5.9"]
+
+[project.urls]
+Repository = "https://github.com/ZCEON/reproducible-data-cleaning-and-transformation"
+
+[tool.setuptools.packages.find]
+# Install the `src` package and its subpackages (src.data, src.cleaning, ...).
+# `tests` and `scripts` are intentionally not installed.
+include = ["src*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Make `src`/`scripts` importable for bare `pytest` runs without installation.
+pythonpath = ["."]

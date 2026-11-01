@@ -1,0 +1,42 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Packaging artifacts
+build/
+dist/
+.eggs/
+*.egg
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Data (keep directory structure via .gitkeep, ignore contents)
+data/raw/*
+data/interim/*
+data/processed/*
+!data/**/.gitkeep
+# Shipped synthetic demonstration dataset + its label (see data/raw/README.md)
+!data/raw/synthetic_*.csv
+!data/raw/README.md
+
+# Results (keep structure)
+results/figures/*
+results/reports/*
+results/metrics/*
+!results/**/.gitkeep
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
