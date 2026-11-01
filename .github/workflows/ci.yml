@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: |
+            pyproject.toml
+            requirements.txt
+
+      - name: Install project (documented method)
+        run: pip install -e ".[dev]"
+
+      - name: Check Python syntax
+        run: python -m compileall -q src scripts tests
+
+      - name: Check imports
+        run: python -c "from src.data.load_data import load_csv; from src.data.validate_data import validate_dataframe; from src.pipeline.preprocessing_pipeline import clean, transform, preprocess; from src.transformation.scaling import scale; from src.transformation.encoding import encode; from scripts import run_pipeline; print('imports OK')"
+
+      - name: Run test suite
+        run: pytest -q
